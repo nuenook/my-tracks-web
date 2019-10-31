@@ -20,7 +20,7 @@ const ProjectTable: React.SFC<ProjectTableProps> = ({
         <tbody>
             {projects.map( (project, index) => 
                 <tr key={project.id}>
-                    <td scope="row">{index + 1}</td>
+                    <td>{index + 1}</td>
                     <td>{project.projectName}</td>
                 </tr>
             )}

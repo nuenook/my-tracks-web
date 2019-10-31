@@ -1,3 +1,19 @@
+# Tracking Work Hours Projects
+
+## Overview
+ tracking daily hour on each project (IN CASE: you  are working on multiple projects) and reports project in average times by Day / Month / Year
+
+ Example;
+  December
+   Project 1: 60%
+   Project 2: 20%
+   Prokect 3: 20%
+
+## NEED HELP
+ - Design
+ - Backend API
+ - DevOps and Unit-Testing
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
