@@ -1,11 +1,17 @@
 import * as React from 'react';
-import { Pie, Bar } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
+import TimeTable from '../components/TimeTable/TimeTable';
 
 export interface HomePageProps {
-    
+
 }
- 
+
 const HomePage: React.SFC<HomePageProps> = () => {
+
+    const [selectDate, setSelectDate] = React.useState(new Date())
     const data = {
         labels: [
             'Project one: ' + 60,
@@ -15,55 +21,44 @@ const HomePage: React.SFC<HomePageProps> = () => {
         datasets: [{
             data: [60, 30, 10],
             backgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56'
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56'
             ],
             hoverBackgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56'
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56'
             ]
         }],
         tooltips: {
             mode: 'point'
         }
     };
-    
-    const data2 = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-          {
-            label: 'My First dataset',
-            backgroundColor: 'rgba(255,99,132,0.2)',
-            borderColor: 'rgba(255,99,132,1)',
-            borderWidth: 1,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'rgba(255,99,132,1)',
-            data: [65, 59, 80, 81, 56, 55, 40]
-          },
-          {
-            label: 'My Second dataset',
-            backgroundColor: '#36A2EB',
-            borderColor: 'rgba(255,99,132,1)',
-            borderWidth: 1,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'rgba(255,99,132,1)',
-            data: [65, 59, 80, 81, 56, 55, 40]
-          }
-        ]
-      };
+
+    const handleChange = (date: Date) => {
+        console.log(moment(date).format('LLLL'))
+        
+        setSelectDate(date)
+    }
+
     return (
         <div className="row">
-            <div className="col-md-6">
-                <Pie data={data} />
+            <div className="col-md-12 text-center">
+                <DatePicker
+                    className="form-control"
+                    selected={selectDate}
+                    onChange={handleChange}
+                />
             </div>
             <div className="col-md-6">
-            {/* data: [{x:'2016-12-25', y:20}, {x:'2016-12-26', y:10}] */}
-            <Bar data={data2} />
+                <TimeTable />
+            </div>
+            <div className="col-md-6">
+                <Pie data={data} />
             </div>
         </div>
     );
 }
- 
+
 export default HomePage;
