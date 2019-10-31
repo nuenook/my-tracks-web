@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import TimeTable from '../components/TimeTable/TimeTable';
+import TimeForm from '../components/TimeTable/TimeForm'
 
 export interface HomePageProps {
 
@@ -44,18 +45,27 @@ const HomePage: React.SFC<HomePageProps> = () => {
 
     return (
         <div className="row">
-            <div className="col-md-12 text-center">
+            <div className="col-md-6 text-center">
                 <DatePicker
                     className="form-control"
                     selected={selectDate}
                     onChange={handleChange}
                 />
             </div>
+            <div className="col-md-6 text-center">
+                <select name="" id="">
+                    <option value="HarperDB">HarperDB</option>
+                    <option value="ScoutAsia">ScoutAsia</option>
+                </select>
+            </div>
             <div className="col-md-6">
-                <TimeTable />
+                <TimeForm />
             </div>
             <div className="col-md-6">
                 <Pie data={data} />
+            </div>
+            <div className="col-md-12">
+                <TimeTable />
             </div>
         </div>
     );

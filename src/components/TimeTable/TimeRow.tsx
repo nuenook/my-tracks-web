@@ -8,7 +8,7 @@ const TimeRow: React.SFC<TimeRowProps> = ({loading = false}) => {
     
 
     if (loading) {
-        return  <p> Loading </p>
+        return  <p className="text-center"> Loading </p>
     }
 
     return (
