@@ -45,18 +45,12 @@ const HomePage: React.SFC<HomePageProps> = () => {
 
     return (
         <div className="row">
-            <div className="col-md-6 text-center">
+            <div className="col-md-12 text-center">
                 <DatePicker
                     className="form-control"
                     selected={selectDate}
                     onChange={handleChange}
                 />
-            </div>
-            <div className="col-md-6 text-center">
-                <select name="" id="">
-                    <option value="HarperDB">HarperDB</option>
-                    <option value="ScoutAsia">ScoutAsia</option>
-                </select>
             </div>
             <div className="col-md-6">
                 <TimeForm />

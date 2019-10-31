@@ -1,16 +1,23 @@
 import * as React from 'react';
 
 export interface TimeFormProps {
-    
+
 }
- 
+
 const TimeForm: React.SFC<TimeFormProps> = () => {
     return (
         <div>
             <form action="">
                 <div className="form-group">
-                    <label htmlFor="projectName">Hour(s)</label>
-                    <input type="number" id="projectName" className="form-control" required />
+                    <label htmlFor="project">Select Project</label>
+                    <select name="" id="project" className="form-control">
+                        <option value="HarperDB">HarperDB</option>
+                        <option value="ScoutAsia">ScoutAsia</option>
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="hours">Hour(s)</label>
+                    <input type="number" id="hours" className="form-control" required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="note">Notes</label>
@@ -23,5 +30,5 @@ const TimeForm: React.SFC<TimeFormProps> = () => {
         </div>
     );
 }
- 
+
 export default TimeForm;
