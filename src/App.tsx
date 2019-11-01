@@ -23,7 +23,6 @@ const App: React.FC = () => {
             <ReportPage />
           </Route>
         </Switch>
-
       </div>
     </BrowserRouter>
   );

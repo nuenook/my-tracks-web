@@ -11,7 +11,7 @@
 
 ## NEED HELP
  - Design
- - Backend API
+ - ~~Backend API~~, I decide to use Firebase
  - DevOps and Unit-Testing
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
