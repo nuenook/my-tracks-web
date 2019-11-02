@@ -8,7 +8,7 @@ import ReportPage from '../pages/ReportPage';
 import LoginPage from '../pages/LoginPage';
 import LogoutPage from '../pages/LogoutPage'
 
-interface IRoute {
+export interface IRoute {
     component: React.FunctionComponent<any> | React.ComponentClass<any, any>;
     path: string;
     name: string;

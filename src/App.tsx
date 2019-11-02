@@ -6,11 +6,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBars from './components/layout/Navbars';
 import PrivateRoute from './route/PrivateRoute';
 import routes from './route';
-import { AuthProvider } from './route/AuthRoute'
+import AuthContextProvider from './contexts/AuthContext'
 
 const App: React.FC = () => {
   return (
-    <AuthProvider>
+    <AuthContextProvider>
       <BrowserRouter>
         <NavBars />
         <div className="container">
@@ -27,7 +27,7 @@ const App: React.FC = () => {
           </Switch>
         </div>
       </BrowserRouter>
-    </AuthProvider>
+    </AuthContextProvider>
   );
 }
 

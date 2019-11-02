@@ -3,7 +3,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 import routes from '../../route';
 
-import { AuthContext } from "../../route/AuthRoute";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export interface NavBarsProps {
 
@@ -12,8 +12,7 @@ export interface NavBarsProps {
 const NavBars: React.SFC<NavBarsProps> = () => {
     let history = useHistory();
 
-    const currentUser = React.useContext(AuthContext);
-
+    const {currentUser} = React.useContext(AuthContext);
 
     const goTo = (path: string) => {
         history.push(path)

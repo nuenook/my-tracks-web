@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AuthContext } from "../route/AuthRoute";
+import { AuthContext } from "../contexts/AuthContext";
 import firebaseApp from "../firebase"
 
 export interface LogoutPageProps {
@@ -9,18 +9,19 @@ export interface LogoutPageProps {
 const LogoutPage: React.SFC<LogoutPageProps> = () => {
 
     const [isLoading, setLoading] = React.useState(false)
-    const currentUser = React.useContext(AuthContext);
+    const {currentUser, clearCurrentUser} = React.useContext(AuthContext);
 
     React.useEffect(() => {
 
         if(currentUser) {
             setLoading(true)
             firebaseApp.auth().signOut().then(response => {
+                clearCurrentUser()
                 setLoading(false)
               })
         }
 
-    },[currentUser])
+    },[currentUser, clearCurrentUser])
     return (
         <>
             {isLoading? <h2 className="text-center">logout...</h2>

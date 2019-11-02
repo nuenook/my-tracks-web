@@ -1,21 +1,19 @@
 import * as React from 'react';
 import { Route, Redirect } from "react-router-dom";
 
-import { AuthContext } from "./AuthRoute";
+import { AuthContext } from "../contexts/AuthContext";
 
+import {IRoute} from '../route';
 
-export interface PrivateRouteProps {
-    component: any;
-    exact?: boolean;
-    path: string;
-}
+export interface PrivateRouteProps extends IRoute { }
  
 const PrivateRoute: React.SFC<PrivateRouteProps> = ({
     component: RouteComponent,
     ...rest
 }) => {
-    const currentUser = React.useContext(AuthContext);
+    const {currentUser} = React.useContext(AuthContext);
 
+    console.log("currentUser currentUser currentUser", currentUser)
     return (
         <Route 
             {...rest}
