@@ -11,11 +11,14 @@ const AuthContextProvider: React.SFC = ({ children }) => {
     const [currentUser, setCurrentUser] = React.useState("")
 
     React.useEffect(() => {
-        firebaseApp.auth().onAuthStateChanged(user => {
+        const unsubFirebaseAuth = firebaseApp.auth().onAuthStateChanged(user => {
             if(user) {
                 setCurrentUser(user.email ? user.email : "")
             }
         });
+        return () => {
+            unsubFirebaseAuth()
+        }
     }, []);
 
     return (
