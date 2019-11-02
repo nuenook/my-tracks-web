@@ -6,7 +6,7 @@ import { AuthContext } from "./AuthRoute";
 
 export interface PrivateRouteProps {
     component: any;
-    exact: boolean;
+    exact?: boolean;
     path: string;
 }
  

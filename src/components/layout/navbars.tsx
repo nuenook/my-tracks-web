@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
+import routes from '../../route';
+
+import { AuthContext } from "../../route/AuthRoute";
 
 export interface NavBarsProps {
 
@@ -8,6 +11,9 @@ export interface NavBarsProps {
 
 const NavBars: React.SFC<NavBarsProps> = () => {
     let history = useHistory();
+
+    const currentUser = React.useContext(AuthContext);
+
 
     const goTo = (path: string) => {
         history.push(path)
@@ -21,13 +27,19 @@ const NavBars: React.SFC<NavBarsProps> = () => {
                 <Nav className="mr-auto">
                 </Nav>
                 <Nav>
-                    <Nav.Link onClick={() => goTo('/create')}>
-                        Create
-                    </Nav.Link>
-
-                    <Nav.Link eventKey={2} onClick={() => goTo('/report')}>
-                        Report
-                    </Nav.Link>
+                    {currentUser && routes.filter(f => f.isPrivate).map(route => 
+                        <Nav.Link key={route.path} onClick={() => goTo(route.path)}>
+                            {route.name}
+                        </Nav.Link>
+                    )}
+                    {currentUser ? (
+                        <Nav.Link onClick={() => goTo('/logout')}>
+                            Logout
+                        </Nav.Link>) :
+                        (<Nav.Link onClick={() => goTo('/login')}>
+                            Login
+                </Nav.Link>)
+                    }
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

@@ -20,7 +20,7 @@ const LogoutPage: React.SFC<LogoutPageProps> = () => {
               })
         }
 
-    },[])
+    },[currentUser])
     return (
         <>
             {isLoading? <h2 className="text-center">logout...</h2>
