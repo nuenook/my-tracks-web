@@ -1,8 +1,5 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBars from './components/layout/Navbars';
 import PrivateRoute from './route/PrivateRoute';
 import routes from './route';

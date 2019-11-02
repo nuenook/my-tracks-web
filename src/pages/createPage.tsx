@@ -1,7 +1,7 @@
 import * as React from 'react';
-import ProjectForm from '../components/ProjectForm';
-import ProjectTable from '../components/ProjectTable';
-
+import ProjectForm from '../components/projects/ProjectForm';
+import ProjectTable from '../components/projects/ProjectTable';
+import "../scss/pages/_createPage.scss"
 export interface CreatePageProps {
 
 }
@@ -18,16 +18,16 @@ const CreatePage: React.SFC<CreatePageProps> = () => {
     ])
     
     const insertData = (projectName: string) => {
-        console.log(" projectName projectName", projectName)
-        setExampleData([...exampleData,    {id: "1234" ,projectName}])
+        setExampleData([...exampleData, {id: "1234" ,projectName}])
     }
+
     return (
         <>
             <div className="row">
                 <div className="col-md-6">
                     <ProjectForm onCreateNewProject={insertData} />
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-6 project-block">
                     <ProjectTable projects={exampleData} />
                 </div>
             </div>

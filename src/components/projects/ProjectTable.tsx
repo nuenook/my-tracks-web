@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {IProject} from '../models/Project.model';
+import {IProject} from '../../models/Project.model';
+import ProjectRow from './ProjectRow';
 
 export interface ProjectTableProps {
     projects: IProject[];
@@ -8,6 +9,7 @@ export interface ProjectTableProps {
 const ProjectTable: React.SFC<ProjectTableProps> = ({
     projects = []
 }) => {
+
     return (
     <>
     <table className="table table-striped">
@@ -15,14 +17,12 @@ const ProjectTable: React.SFC<ProjectTableProps> = ({
             <tr>
                 <th>#</th>
                 <th>Project Name</th>
+                <th className="text-center">delete</th>
             </tr>
         </thead>
         <tbody>
             {projects.map( (project, index) => 
-                <tr key={project.id}>
-                    <td>{index + 1}</td>
-                    <td>{project.projectName}</td>
-                </tr>
+                <ProjectRow key={project.id} index={index} {...project} />
             )}
         </tbody>
     </table>

@@ -25,9 +25,7 @@ const ProjectForm: React.SFC<ProjectFormProps> = ({
                         value={projectName} className="form-control"
                         onChange={e => { 
                             setProjectName(e.target.value)
-                            console.log(projectName)
-                         }
-                        }
+                        }}
                     />
                 </div>
                 <button type="submit" className="btn btn-primary">Create Project</button>
