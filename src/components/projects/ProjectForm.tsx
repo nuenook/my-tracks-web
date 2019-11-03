@@ -1,11 +1,13 @@
 import * as React from 'react';
 
 export interface ProjectFormProps {
-    onCreateNewProject?: (projectName: string) => void
+    onCreateNewProject?: (projectName: string) => void;
+    disable: boolean;
 }
 
 const ProjectForm: React.SFC<ProjectFormProps> = ({
-    onCreateNewProject
+    onCreateNewProject,
+    disable
 }) => {
 
     const [projectName, setProjectName] = React.useState('')
@@ -28,7 +30,7 @@ const ProjectForm: React.SFC<ProjectFormProps> = ({
                         }}
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Create Project</button>
+                <button type="submit" className="btn btn-primary" disabled={disable}>Create Project</button>
             </form>
         </div>
     );
