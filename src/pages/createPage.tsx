@@ -22,14 +22,16 @@ const CreatePage: React.SFC<CreatePageProps> = () => {
 
     React.useEffect(() => {
 
-        const unsub = db.collection("projects").doc(uid)
-            .collection("userProjects").onSnapshot(snapshot => {
+        const unsub = db.collection("projects")
+            .where("userId", "==", uid)
+            .onSnapshot(snapshot => {
 
                 const projects = snapshot.docs.map(doc => {
-                    const {projectName} = doc.data()
+                    const {projectName, userId} = doc.data()
                     return {
                         projectName,
-                        id: doc.id
+                        id: doc.id,
+                        userId
                     }
                 })
 
@@ -42,12 +44,13 @@ const CreatePage: React.SFC<CreatePageProps> = () => {
 
     const insertProject = async (projectName: string) => {
         setInserting(true)
-        const newProject = db.collection("projects").doc(uid)
-            .collection("userProjects").doc()
+        const newProject = db.collection("projects").doc()
 
         await newProject.set({
-            projectName: projectName
+            projectName: projectName,
+            userId: uid
         })
+
         setInserting(false)
     }
 

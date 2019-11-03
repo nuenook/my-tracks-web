@@ -1,31 +1,35 @@
 import * as React from 'react';
+import { IProjectTime } from '../../models/projectTime.model';
 
-export interface TimeRowProps {
+export interface TimeRowProps extends IProjectTime {
     loading?: boolean;
+    index: number;
+
 }
  
-const TimeRow: React.SFC<TimeRowProps> = ({loading = false}) => {
-    
+const TimeRow: React.SFC<TimeRowProps> = ({
+    loading = false,
+    hour,
+    note = "-",
+    index
 
+}) => {
     if (loading) {
         return  <p className="text-center"> Loading </p>
     }
 
     return (
-        <>
+        <tr>
             <td>
-                1
+                {index + 1}
             </td>
             <td>
-                HaroerDB
+                {hour}
             </td>
             <td>
-                4.0 
+                {note}
             </td>
-            <td>
-                -
-            </td>
-        </>
+        </tr>
     );
 }
  
