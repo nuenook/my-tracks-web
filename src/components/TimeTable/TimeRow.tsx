@@ -1,17 +1,21 @@
 import * as React from 'react';
-import { IProjectTime } from '../../models/projectTime.model';
+import { IProjectTime } from '../../types/projectTime.type';
+import {deleteProjectTimestamp} from '../../redux/actions/timesatmpActions';
+import { connect } from 'react-redux';
 
 export interface TimeRowProps extends IProjectTime {
     loading?: boolean;
     index: number;
-
+    deleteProjectTimestamp: typeof deleteProjectTimestamp;
 }
  
-const TimeRow: React.SFC<TimeRowProps> = ({
+export const TimeRow: React.SFC<TimeRowProps> = ({
     loading = false,
     hour,
     note = "-",
-    index
+    id,
+    index,
+    deleteProjectTimestamp
 
 }) => {
     if (loading) {
@@ -29,8 +33,17 @@ const TimeRow: React.SFC<TimeRowProps> = ({
             <td>
                 {note}
             </td>
+            <td>
+                <button onClick={() => deleteProjectTimestamp(id)}> x </button>
+            </td>
         </tr>
     );
 }
  
-export default TimeRow;
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        deleteProjectTimestamp: (timeId: string) => dispatch(deleteProjectTimestamp(timeId)),
+    }
+}
+
+export default connect(undefined, mapDispatchToProps)(TimeRow);

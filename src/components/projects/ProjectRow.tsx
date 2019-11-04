@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {IProject} from '../../models/Project.model';
+import {IProject} from '../../types/Project.type';
 
 export interface ProjectRowProps extends IProject {
     index: number;

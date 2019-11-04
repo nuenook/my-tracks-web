@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import {Provider} from 'react-redux';
-import { createFirestoreInstance, getFirestore } from 'redux-firestore' // <- needed if using firestore
+import { createFirestoreInstance, getFirestore, reduxFirestore } from 'redux-firestore' // <- needed if using firestore
 import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase';
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
@@ -15,7 +15,8 @@ import fbConfig from './firebase';
 
 const store = createStore(rootReducer,
   compose(
-    applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore}))
+    applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
+    reduxFirestore(fbConfig)
   )
 );
 

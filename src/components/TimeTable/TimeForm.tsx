@@ -1,9 +1,9 @@
 import React, {useState, Dispatch, SetStateAction} from 'react';
-import { IProject } from '../../models/Project.model';
-import {IAddProjectTime} from '../../models/projectTime.model'
+import { IProject } from '../../types/Project.type';
+import {IAddProjectTime} from '../../types/projectTime.type'
 export interface TimeFormProps {
     projects: IProject[];
-    insertTimeStamp: ({ projectId, hour }: IAddProjectTime) => Promise<void>;
+    insertTimeStamp: ({ projectId, hour }: IAddProjectTime) => void;
     onChangeProject: Dispatch<SetStateAction<string>>;
     selectProject: string;
 }
@@ -19,7 +19,8 @@ const TimeForm: React.SFC<TimeFormProps> = ({projects, insertTimeStamp, onChange
         insertTimeStamp({
             projectId: selectProject,
             hour: parseInt(hour),
-            note
+            note,
+            timestamp: new Date()
         })
     }
     return (

@@ -28,7 +28,8 @@ const ProjectForm: React.SFC<ProjectFormProps> = ({
                         onChange={e => { 
                             setProjectName(e.target.value)
                         }}
-                    />
+                        min="1"
+                        required/>
                 </div>
                 <button type="submit" className="btn btn-primary" disabled={disable}>Create Project</button>
             </form>

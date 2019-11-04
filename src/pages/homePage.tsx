@@ -1,50 +1,43 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import DatePicker from "react-datepicker";
 import { compose } from 'redux';
-import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 
 import TimeTable from '../components/TimeTable/TimeTable';
 import TimeForm from '../components/TimeTable/TimeForm'
-
-import firebaseApp from '../firebase'
-import { IProject } from '../models/Project.model';
-import { AuthContext } from '../contexts/AuthContext';
-import { IAddProjectTime, IProjectTime } from '../models/projectTime.model';
+import { IProject } from '../types/Project.type';
+import { IAddProjectTime, IProjectTime } from '../types/projectTime.type';
 import ToDayDate from '../utils/ToDayDate';
+import {createProjectTimestamp} from '../redux/actions/timesatmpActions'
 
-
-const db = firebaseApp.firestore()
 
 export interface HomePageProps {
     userProjects: IProject[];
     timeData: IProjectTime[];
+    createProjectTimestamp: typeof createProjectTimestamp;
 }
 
 export const HomePage: React.SFC<HomePageProps> = ({
     userProjects,
-    timeData
+    timeData,
+    createProjectTimestamp
 }) => {
 
     const [selectDate, setSelectDate] = useState()
     const [selectProject, setSelectProject] = useState('')
     const [timeDataOfProject, setTimeDataOfProject] = useState<IProjectTime[]>([])
     const [pieChartData, setPieChartData] = useState({})
-    const { uid } = useContext(AuthContext)
 
-    const insertTimeOfProject = async ({ projectId, hour, note }: IAddProjectTime) => {
-        const attentTime = db.collection("timestamps").doc()
-
-        await attentTime.set({
-            timestamp: selectDate,
-            onDay: moment(selectDate).format('MM-DD-YYYY'),
+    const insertTimeOfProject = ({ projectId, hour, note }: IAddProjectTime) => {
+        createProjectTimestamp({
             projectId,
             hour,
-            userId: uid,
-            note: note ? note : null
+            note: note ? note : "",
+            timestamp: selectDate,
         })
     }
 
@@ -75,9 +68,9 @@ export const HomePage: React.SFC<HomePageProps> = ({
 
     useEffect(() => {
         
-        if (timeData && timeData.length > 0) {
+        if (timeData) {
             const timeDataFromSelectDate = timeData.filter(t => t.onDay === ToDayDate(selectDate))
-            const sumHours = timeData.reduce((sum, cur) => sum + cur.hour, 0)
+            const sumHours = timeDataFromSelectDate.reduce((sum, cur) => sum + cur.hour, 0)
             const newChartData = {
                 labels: userProjects.sort((a, b) => a.id.localeCompare(b.id)).map(pro => pro.projectName),
                 datasets: [{
@@ -111,7 +104,7 @@ export const HomePage: React.SFC<HomePageProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectDate, selectProject, timeData])
 
-    if (!isLoaded(timeData) || !isLoaded(userProjects)) {
+    if (!timeData || !userProjects) {        
         return <p>Loading...</p>
     }
     else {
@@ -153,8 +146,14 @@ const mapStateToProps = (state: any, ownProps: any) => {
     }
 }
 
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        createProjectTimestamp: (projectTime: IAddProjectTime) => dispatch(createProjectTimestamp(projectTime))
+    }
+}
+
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect((props: any) => {
         return [
             { collection: 'projects', where: ["userId", "==", props.auth.uid] },

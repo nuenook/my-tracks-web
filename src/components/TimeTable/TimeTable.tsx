@@ -1,12 +1,12 @@
 import * as React from 'react';
 import TimeRow from './TimeRow';
-import { IProjectTime } from '../../models/projectTime.model';
+import { IProjectTime } from '../../types/projectTime.type';
 
 export interface TimeTableProps {
     timeData: IProjectTime[];
 }
 
-const TimeTable: React.SFC<TimeTableProps> = ({timeData}) => {
+export const TimeTable: React.SFC<TimeTableProps> = ({timeData}) => {
 
     return (
         <table className="table table-striped">
@@ -15,6 +15,7 @@ const TimeTable: React.SFC<TimeTableProps> = ({timeData}) => {
                     <th>#</th>
                     <th>Hour</th>
                     <th>Note</th>
+                    <th>delete</th>
                 </tr>
             </thead>
             <tbody>

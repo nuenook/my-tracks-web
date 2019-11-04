@@ -5,11 +5,11 @@ export interface IAddProjectTime {
     projectId: string;
     userId?: string;
     hour: number;
-    note?: string; 
+    note?: string;
+    timestamp: firebase.firestore.Timestamp | Date;
 }
 
 export interface IProjectTime extends IAddProjectTime {
     id: string;
-    timestamp: firebase.firestore.Timestamp;
     onDay: string;
 }

@@ -1,16 +1,12 @@
 
-import actionTypes from '../../types/actions.type'
+import actionTypes, {IActionType} from '../../types/actions.type'
 
 const initStates = {
     authError: ""
 }
 
-interface actionType {
-    type: string;
-    payload: object| string | boolean;
-}
 
-const authReducer = (state = initStates, action: actionType) => {
+const authReducer = (state = initStates, action: IActionType) => {
     switch(action.type) {
         case actionTypes.SIGN_IN_SUCCESS: 
             return {
@@ -19,9 +15,10 @@ const authReducer = (state = initStates, action: actionType) => {
             }
         case actionTypes.SIGN_IN_ERROR:
             console.log('login error');
+            alert(action.payload)
             return {
               ...state,
-              authError: 'Login failed'
+              authError: action.payload
             }
         default: 
             return state

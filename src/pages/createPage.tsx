@@ -5,39 +5,29 @@ import { compose } from 'redux'
 import ProjectForm from '../components/projects/ProjectForm';
 import ProjectTable from '../components/projects/ProjectTable';
 import "../scss/pages/_createPage.scss"
-import { AuthContext } from '../contexts/AuthContext';
-import firebaseApp from '../firebase'
-import { IProject } from '../models/Project.model';
+import { IProject } from '../types/Project.type';
 import { connect } from 'react-redux';
+import {createProject} from '../redux/actions/projectActions';
+import { INewProject } from '../types/Project.type';
 
-const db = firebaseApp.firestore()
 
 export interface CreatePageProps {
     userProjects: IProject[];
+    createProject: typeof createProject;
 }
 
-const CreatePage: React.SFC<CreatePageProps> = ({ userProjects }) => {
+const CreatePage: React.SFC<CreatePageProps> = ({ userProjects, createProject }) => {
 
-    const [inserting, setInserting] = React.useState(false)
-    const { uid } = React.useContext(AuthContext)
 
     const insertProject = async (projectName: string) => {
-        setInserting(true)
-        const newProject = db.collection("projects").doc()
-
-        await newProject.set({
-            projectName: projectName,
-            userId: uid
-        })
-
-        setInserting(false)
+        createProject({projectName})
     }
 
     return (
         <>
             <div className="row">
                 <div className="col-md-6">
-                    <ProjectForm disable={inserting} onCreateNewProject={insertProject} />
+                    <ProjectForm disable={false} onCreateNewProject={insertProject} />
                 </div>
                 <div className="col-md-6 project-block">
                     <ProjectTable projects={userProjects} />
@@ -56,9 +46,15 @@ const mapStateToProps = (state: any, ownProps: any) => {
     }
 }
 
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        createProject: (project: INewProject) => dispatch(createProject(project))
+    }
+}
+
 export default compose(
-    connect(mapStateToProps),
-    firestoreConnect([{
-        collection: 'projects'
-    }])
+    connect(mapStateToProps, mapDispatchToProps),
+    firestoreConnect((props: any) => {
+        return [{ collection: 'projects', where: ["userId", "==", props.auth.uid]}]},
+    )
 )(CreatePage);
