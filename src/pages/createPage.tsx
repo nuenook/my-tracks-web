@@ -1,46 +1,25 @@
 import * as React from 'react';
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from 'redux'
+
 import ProjectForm from '../components/projects/ProjectForm';
 import ProjectTable from '../components/projects/ProjectTable';
 import "../scss/pages/_createPage.scss"
 import { AuthContext } from '../contexts/AuthContext';
-
 import firebaseApp from '../firebase'
-import {IProject} from '../models/Project.model';
+import { IProject } from '../models/Project.model';
+import { connect } from 'react-redux';
 
 const db = firebaseApp.firestore()
 
 export interface CreatePageProps {
-
+    userProjects: IProject[];
 }
 
-const CreatePage: React.SFC<CreatePageProps> = () => {
+const CreatePage: React.SFC<CreatePageProps> = ({ userProjects }) => {
 
     const [inserting, setInserting] = React.useState(false)
-
-    const [userProjects, setUserProject] = React.useState<IProject[]>([])
     const { uid } = React.useContext(AuthContext)
-
-    React.useEffect(() => {
-
-        const unsub = db.collection("projects")
-            .where("userId", "==", uid)
-            .onSnapshot(snapshot => {
-
-                const projects = snapshot.docs.map(doc => {
-                    const {projectName, userId} = doc.data()
-                    return {
-                        projectName,
-                        id: doc.id,
-                        userId
-                    }
-                })
-
-                setUserProject(projects)
-            })
-
-        return () => unsub()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const insertProject = async (projectName: string) => {
         setInserting(true)
@@ -68,4 +47,18 @@ const CreatePage: React.SFC<CreatePageProps> = () => {
     );
 }
 
-export default CreatePage;
+const mapStateToProps = (state: any, ownProps: any) => {
+    const projects = state.firestore.ordered.projects;
+
+    return {
+        userProjects: projects,
+        auth: state.firebase.auth
+    }
+}
+
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect([{
+        collection: 'projects'
+    }])
+)(CreatePage);

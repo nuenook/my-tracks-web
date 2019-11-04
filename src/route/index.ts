@@ -1,7 +1,3 @@
-
-
-import React from 'react';
-
 import CreatePage from '../pages/CreatePage';
 import HomePage from '../pages/HomePage';
 import ReportPage from '../pages/ReportPage';
@@ -9,7 +5,7 @@ import LoginPage from '../pages/LoginPage';
 import LogoutPage from '../pages/LogoutPage'
 
 export interface IRoute {
-    component: React.FunctionComponent<any> | React.ComponentClass<any, any>;
+    component: any;
     path: string;
     name: string;
     exact?: boolean;

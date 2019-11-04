@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
-import firebaseApp from '../firebase';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
 import { useHistory } from "react-router-dom";
 
+import { signIn } from '../redux/actions/authActions';
+import { ICred } from '../types/auth.type';
 
-export interface LoginPageProps {
+
+export interface LoginPageProps { }
+
+export interface ILoginPageReduxDispatch {
+    signIn: typeof signIn
 }
 
-const LoginPage: React.SFC<LoginPageProps> = () => {
+export interface ILoginPageReduxState {
+    auth: any;
+}
+
+const LoginPage: React.SFC<LoginPageProps & ILoginPageReduxState & ILoginPageReduxDispatch> = ({ auth, signIn }) => {
     let history = useHistory();
 
     const [email, setEmail] = useState('')
@@ -14,18 +24,16 @@ const LoginPage: React.SFC<LoginPageProps> = () => {
     const handleLogin = async (event: any) => {
         event.preventDefault();
 
-        try {
-            await firebaseApp
-                .auth()
-                .signInWithEmailAndPassword(email, password);
+        signIn({ email, password })
+    }
+
+    useEffect(() => {
+        if (auth.uid)
             history.push("/");
 
-        } catch (error) {
-            console.log("error auth: ", error)
-            alert(error);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [auth])
 
-        }
-    }
     return (
         <>
             <h1 className="text-center">Log in</h1>
@@ -62,4 +70,17 @@ const LoginPage: React.SFC<LoginPageProps> = () => {
     );
 }
 
-export default LoginPage;
+const mapStateToProps = (state: any) => {
+
+    return {
+        authError: state.auth.authError,
+        auth: state.firebase.auth
+    }
+}
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        signIn: (creds: ICred) => dispatch(signIn(creds))
+    }
+}
+
+export default connect<ILoginPageReduxState, ILoginPageReduxDispatch, LoginPageProps>(mapStateToProps, mapDispatchToProps)(LoginPage);

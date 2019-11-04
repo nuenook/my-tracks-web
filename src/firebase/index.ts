@@ -4,9 +4,10 @@ import 'firebase/firestore';
 
 import config from './config'
 
-
 if (!firebase.apps.length) {
     firebase.initializeApp(config)
   }
+
+firebase.firestore()
 
 export default firebase
