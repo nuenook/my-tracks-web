@@ -4,12 +4,10 @@ import { compose } from 'redux'
 
 import ProjectForm from '../components/projects/ProjectForm';
 import ProjectTable from '../components/projects/ProjectTable';
-import "../scss/pages/_createPage.scss"
 import { IProject } from '../types/Project.type';
 import { connect } from 'react-redux';
 import {createProject} from '../redux/actions/projectActions';
 import { INewProject } from '../types/Project.type';
-
 
 export interface CreatePageProps {
     userProjects: IProject[];
