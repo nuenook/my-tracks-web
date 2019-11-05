@@ -11,13 +11,15 @@ const PrivateRoute: React.SFC<PrivateRouteProps> = ({
     component: RouteComponent,
     ...rest
 }) => {
-    const {currentUser} = React.useContext(AuthContext);
+    const {currentUser, loading} = React.useContext(AuthContext);
 
-    console.log("currentUser currentUser currentUser", currentUser)
+    console.log("currentUser ", currentUser)
+
     return (
-        <Route 
+        <Route
             {...rest}
             render={routeProps =>
+                loading ? <p>auth checking...</p> :
                 !!currentUser ? (
                   <RouteComponent {...routeProps} />
                 ) : (

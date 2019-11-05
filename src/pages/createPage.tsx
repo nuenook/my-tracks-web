@@ -16,9 +16,12 @@ export interface CreatePageProps {
 
 const CreatePage: React.SFC<CreatePageProps> = ({ userProjects, createProject }) => {
 
-
     const insertProject = async (projectName: string) => {
         createProject({projectName})
+    }
+
+    if (!userProjects) {
+        return <p>Loading...</p>
     }
 
     return (
