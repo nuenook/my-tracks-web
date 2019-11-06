@@ -1,35 +1,34 @@
 import * as React from 'react';
 import { Pie, Bar } from 'react-chartjs-2';
+import { firestoreConnect } from 'react-redux-firebase';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
+import ToFirstAndLastDayOfMonth from '../utils/GetFirstAndLastDayMonth'
+import moment from 'moment';
+import { IProjectTime } from '../types/projectTime.type';
+import { IProject } from '../types/Project.type';
+import PieChartData from '../utils/PieChartData';
 
 export interface ReportPageProps {
-
+    timeData: IProjectTime[],
+    userProjects: IProject[]
 }
 
-const ReportPage: React.SFC<ReportPageProps> = () => {
-    const data = {
-        labels: [
-            'Project one: ' + 60,
-            'Project two',
-            'Project three',
-        ],
-        datasets: [{
-            data: [60, 30, 10],
-            backgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
-            ],
-            hoverBackgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
-            ]
-        }],
-        tooltips: {
-            mode: 'point'
+const ReportPage: React.SFC<ReportPageProps> = ({
+    timeData,
+    userProjects
+}) => {
+    const [pieChartData, setPieChartData] = React.useState({})
+
+    React.useEffect(() => {
+
+        if(userProjects && timeData){
+            const newChartData = PieChartData(userProjects, timeData)
+
+            setPieChartData(newChartData)
         }
-    };
+    }, [userProjects, timeData])
 
     const data2 = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -54,10 +53,14 @@ const ReportPage: React.SFC<ReportPageProps> = () => {
             }
         ]
     };
+
+    if(!userProjects || !timeData) {
+        return <p>Loading...</p>
+    }
     return (
         <div className="row">
             <div className="col-md-6">
-                <Pie data={data} />
+                <Pie data={pieChartData} />
             </div>
             <div className="col-md-6">
                 <Bar data={data2} />
@@ -66,4 +69,32 @@ const ReportPage: React.SFC<ReportPageProps> = () => {
     );
 }
 
-export default ReportPage;
+const mapStateToProps = (state: any, ownProps: any) => {
+
+    const projects = state.firestore.ordered.projects;
+    const timeData = state.firestore.ordered.timestamps;
+
+    return {
+        userProjects: projects,
+        timeData,
+        auth: state.firebase.auth
+    }
+}
+
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect((props: any) => {
+        const currentDate = new Date()
+
+        const dateRange = ToFirstAndLastDayOfMonth(1 + moment(currentDate).month(), moment(currentDate).year())
+        
+        return [
+            { collection: 'projects', where: ["userId", "==", props.auth.uid] },
+            { collection: 'timestamps', where: [
+                ["userId", "==", props.auth.uid],
+                ["timestamp", ">=", dateRange.startOfMonth],
+                ["timestamp", "<=", dateRange.endOfMonth]
+            ]},
+        ]
+    })
+)(ReportPage);

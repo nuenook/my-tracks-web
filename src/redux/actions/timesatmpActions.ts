@@ -33,6 +33,9 @@ export const deleteProjectTimestamp = (timestampId: string) => {
     }
 }
 
-export const selectCurrentDate = (selectDate: Date) => {
-    return (dispatch: any) => dispatch({ type: actionTypes.TIMESTAMP_SELECT, payload: selectDate });
+export const setSelectDate = (selectDate: Date) => {
+
+    return (dispatch: any, getState: any, { getFirestore }: any) => {
+        dispatch({ type: actionTypes.TIMESTAMP_SELECT, payload: selectDate })
+    };
 }

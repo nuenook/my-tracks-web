@@ -2,7 +2,7 @@
 import actionTypes, {IActionType} from '../../types/actions.type'
 
 const initStates = {
-    currentDate: ""
+    selectDate: new Date()
 }
 
 
@@ -15,7 +15,7 @@ const timestampReducer = (state = initStates, action: IActionType) => {
             console.log('create timestamp error', action.payload);
             return state;
         case actionTypes.TIMESTAMP_SELECT:
-            return {...state, currentDate: action.payload}
+            return {...state, selectDate: action.payload}
         case actionTypes.TIMESTAMP_DELETE_SUCCESS: 
             return state;
         case actionTypes.TIMESTAMP_DELETE_ERROR: 

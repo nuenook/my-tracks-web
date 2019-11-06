@@ -12,22 +12,26 @@ import TimeForm from '../components/TimeTable/TimeForm'
 import { IProject } from '../types/Project.type';
 import { IAddProjectTime, IProjectTime } from '../types/projectTime.type';
 import ToDayDate from '../utils/ToDayDate';
-import {createProjectTimestamp} from '../redux/actions/timesatmpActions'
-
+import {createProjectTimestamp, setSelectDate} from '../redux/actions/timesatmpActions'
+import PieChartData from '../utils/PieChartData'
 
 export interface HomePageProps {
     userProjects: IProject[];
     timeData: IProjectTime[];
     createProjectTimestamp: typeof createProjectTimestamp;
+    selectDate: Date;
+    setSelectDate: typeof setSelectDate;
+
 }
 
 export const HomePage: React.SFC<HomePageProps> = ({
     userProjects,
     timeData,
-    createProjectTimestamp
+    createProjectTimestamp,
+    selectDate,
+    setSelectDate
 }) => {
 
-    const [selectDate, setSelectDate] = useState()
     const [selectProject, setSelectProject] = useState('')
     const [timeDataOfProject, setTimeDataOfProject] = useState<IProjectTime[]>([])
     const [pieChartData, setPieChartData] = useState({})
@@ -43,9 +47,9 @@ export const HomePage: React.SFC<HomePageProps> = ({
 
     useEffect(() => {
         if (timeData) {
-            if (!selectDate) {
-                setSelectDate(new Date())
-            }
+            // if (!selectDate) {
+            //     setSelectDate(new Date())
+            // }
 
             const useTimes = timeData.filter(t => t.projectId === selectProject && t.onDay === ToDayDate(selectDate))
             setTimeDataOfProject(useTimes)
@@ -70,32 +74,8 @@ export const HomePage: React.SFC<HomePageProps> = ({
         
         if (timeData) {
             const timeDataFromSelectDate = timeData.filter(t => t.onDay === ToDayDate(selectDate))
-            const sumHours = timeDataFromSelectDate.reduce((sum, cur) => sum + cur.hour, 0)
-            const newChartData = {
-                labels: userProjects.sort((a, b) => a.id.localeCompare(b.id)).map(pro => pro.projectName),
-                datasets: [{
-                    data: userProjects.sort((a, b) => a.id.localeCompare(b.id))
-                        .reduce<number[]>((count, cur) => {
-                            const countTimeUse = timeDataFromSelectDate.filter(t => t.projectId === cur.id).reduce((sum, t) => sum += t.hour, 0)
-
-                            return [...count, countTimeUse / sumHours * 100]
-                        }, [])
-                    ,
-                    backgroundColor: [
-                        '#FF6384',
-                        '#36A2EB',
-                        '#FFCE56'
-                    ],
-                    hoverBackgroundColor: [
-                        '#FF6384',
-                        '#36A2EB',
-                        '#FFCE56'
-                    ]
-                }],
-                tooltips: {
-                    mode: 'point'
-                }
-            };
+            
+            const newChartData = PieChartData(userProjects, timeDataFromSelectDate)
 
             setPieChartData(newChartData)
             const useTimes = timeData.filter(t => t.projectId === selectProject && t.onDay === ToDayDate(selectDate))
@@ -136,27 +116,34 @@ export const HomePage: React.SFC<HomePageProps> = ({
 }
 
 const mapStateToProps = (state: any, ownProps: any) => {
-
     const projects = state.firestore.ordered.projects;
     const timeData = state.firestore.ordered.timestamps;
+
     return {
         userProjects: projects,
         timeData,
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        selectDate: state.timestamp.selectDate
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        createProjectTimestamp: (projectTime: IAddProjectTime) => dispatch(createProjectTimestamp(projectTime))
+        createProjectTimestamp: (projectTime: IAddProjectTime) => dispatch(createProjectTimestamp(projectTime)),
+        setSelectDate: (newDate: Date) => dispatch(setSelectDate(newDate))
     }
 }
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect((props: any) => {
+
         return [
             { collection: 'projects', where: ["userId", "==", props.auth.uid] },
-            { collection: 'timestamps', where: ["userId", "==", props.auth.uid] }]
+            { collection: 'timestamps', where: [
+                ["userId", "==", props.auth.uid],
+                ["onDay", "==", ToDayDate( props.selectDate)]
+            ]}
+        ]
     })
 )(HomePage);
