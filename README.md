@@ -1,5 +1,8 @@
 # Tracking Work Hours Projects
 
+### Hosting URL: 
+   https://my-tracks-app.firebaseapp.com
+
 ## Overview
  tracking daily hour on each project (IN CASE: you  are working on multiple projects) and reports project in average times by Day / Month / Year
 
@@ -9,9 +12,22 @@
    Project 2: 20%
    Prokect 3: 20%
 
+## Done
+ - Add new project
+ - Add timestamp for each project
+ - Delete timestamp of project
+ - Login/Logout process
+## TODO 
+ - Reports by each months and year on Report Page
+ - Edit timestamp on Home Page
+ - Delete project by force remove childs data too
+ - Edit Project
+ - Add unit-test
+ - Modify label of Pie chart to have percent or number of hour
+
 ## NEED HELP
  - Design
- - ~~Backend API~~, I decide to use Firebase
+ - ~~Backend API~~, I decided to use Firebase
  - DevOps and Unit-Testing
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
