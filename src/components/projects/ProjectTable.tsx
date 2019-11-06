@@ -2,14 +2,18 @@ import * as React from 'react';
 import {IProject} from '../../types/Project.type';
 import ProjectRow from './ProjectRow';
 
-export interface ProjectTableProps {
+export interface IProjectTableProps {
     projects: IProject[];
 }
 
-const ProjectTable: React.SFC<ProjectTableProps> = ({
+const ProjectTable: React.SFC<IProjectTableProps> = ({
     projects = []
 }) => {
 
+    if(!projects || projects.length == 0) {
+        return <p>No Project Data...</p>
+    }
+    
     return (
     <>
     <table className="table table-striped">

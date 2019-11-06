@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {IProject} from '../../types/Project.type';
 
-export interface ProjectRowProps extends IProject {
+export interface IProjectRowProps extends IProject {
     index: number;
 
 }
  
-const ProjectRow: React.SFC<ProjectRowProps> = ({projectName, id, index}) => {
+const ProjectRow: React.SFC<IProjectRowProps> = ({projectName, index}) => {
     return (
         <tr>
             <td>{index + 1}</td>
