@@ -2,11 +2,11 @@ import * as React from 'react';
 import TimeRow from './TimeRow';
 import { IProjectTime } from '../../types/projectTime.type';
 
-export interface TimeTableProps {
+export interface ITimeTableProps {
     timeData: IProjectTime[];
 }
 
-export const TimeTable: React.SFC<TimeTableProps> = ({timeData}) => {
+export const TimeTable: React.SFC<ITimeTableProps> = ({timeData}) => {
 
     return (
         <table className="table table-striped">

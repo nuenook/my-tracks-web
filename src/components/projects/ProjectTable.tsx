@@ -10,7 +10,7 @@ const ProjectTable: React.SFC<IProjectTableProps> = ({
     projects = []
 }) => {
 
-    if(!projects || projects.length == 0) {
+    if(!projects || projects.length === 0) {
         return <p>No Project Data...</p>
     }
     

@@ -6,7 +6,7 @@ import ProjectForm, {IProjectFormProps} from '../../../components/projects/Proje
 describe("ProjectForm components", () => {
     let props: IProjectFormProps;
     let wrapper;
-    let onClickMock;
+    let onClickMock: jest.Mock<any, any>;
 
     beforeEach(() => {
         onClickMock = jest.fn()

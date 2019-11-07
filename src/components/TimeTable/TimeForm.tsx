@@ -1,14 +1,14 @@
 import React, {useState, Dispatch, SetStateAction} from 'react';
 import { IProject } from '../../types/Project.type';
 import {IAddProjectTime} from '../../types/projectTime.type'
-export interface TimeFormProps {
+export interface ITimeFormProps {
     projects: IProject[];
     insertTimeStamp: ({ projectId, hour }: IAddProjectTime) => void;
     onChangeProject: Dispatch<SetStateAction<string>>;
     selectProject: string;
 }
 
-const TimeForm: React.SFC<TimeFormProps> = ({projects, insertTimeStamp, onChangeProject, selectProject}) => {
+const TimeForm: React.SFC<ITimeFormProps> = ({projects, insertTimeStamp, onChangeProject, selectProject}) => {
 
     const [hour, setHour] = useState("0")
     const [note, setNote] = useState("")
@@ -33,6 +33,7 @@ const TimeForm: React.SFC<TimeFormProps> = ({projects, insertTimeStamp, onChange
                         onChange={ e => {
                             onChangeProject(e.target.value)
                         }}
+                        required={true}
                     >
                         {projects.map(pro => <option key={pro.id} value={pro.id}>{pro.projectName}</option>)}
                     </select>

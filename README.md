@@ -18,6 +18,7 @@
  - Delete timestamp of project
  - Login/Logout process
 ## TODO 
+ - All forms validation
  - Reports by each months and year on Report Page
  - Edit timestamp on Home Page
  - Delete project by force remove childs data too
