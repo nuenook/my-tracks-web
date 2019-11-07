@@ -19,7 +19,7 @@ describe("ProjectTable component", () => {
         expect(wrapper.find('table')).toHaveLength(0)
     })
 
-    it("render one project", () => {
+    it("render one project, show one row", () => {
         projectTableProps.projects = [
             {
                 userId: "user-1234",
@@ -34,7 +34,7 @@ describe("ProjectTable component", () => {
         expect(wrapper.find('ProjectRow')).toHaveLength(1)
     })
 
-    it("render more one projects", () => {
+    it("render two projects, show two rows", () => {
         projectTableProps.projects = [
             {
                 userId: "user-1234",
