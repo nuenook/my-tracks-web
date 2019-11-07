@@ -28,7 +28,7 @@ const CreatePage: React.SFC<CreatePageProps> = ({ userProjects, createProject })
         <>
             <div className="row">
                 <div className="col-md-6">
-                    <ProjectForm disable={false} onCreateNewProject={insertProject} />
+                    <ProjectForm onCreateNewProject={insertProject} />
                 </div>
                 <div className="col-md-6 project-block">
                     <ProjectTable projects={userProjects} />
