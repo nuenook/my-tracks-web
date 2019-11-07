@@ -11,7 +11,15 @@ describe("ProjectTable component", () => {
             projects: []
         }
     })
-    
+
+    it("when not pass project, should error", () => {
+        projectTableProps.projects = undefined;
+        
+        wrapper = shallow(<ProjectTable {...projectTableProps}/>)
+
+        expect(wrapper.find('p').text()).toBe('No Project Data...')
+        expect(wrapper.find('table')).toHaveLength(0)
+    })
     it("render on zero project, should be able rendering", () => {
         wrapper = shallow(<ProjectTable {...projectTableProps}/>)
 

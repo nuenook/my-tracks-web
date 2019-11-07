@@ -12,11 +12,8 @@ const ProjectForm: React.SFC<IProjectFormProps> = ({
 
     const onSubmiting = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
-        if(onCreateNewProject){
-            onCreateNewProject(projectName)
-            setProjectName('')
-        }
+        onCreateNewProject(projectName)
+        setProjectName('')
     }
     return (
         <div>
