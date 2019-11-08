@@ -9,12 +9,12 @@ import { connect } from 'react-redux';
 import {createProject} from '../redux/actions/projectActions';
 import { INewProject } from '../types/Project.type';
 
-export interface CreatePageProps {
+export interface CreateProjectPageProps {
     userProjects: IProject[];
     createProject: typeof createProject;
 }
 
-const CreatePage: React.SFC<CreatePageProps> = ({ userProjects, createProject }) => {
+const CreateProjectPage: React.SFC<CreateProjectPageProps> = ({ userProjects, createProject }) => {
 
     const insertProject = async (projectName: string) => {
         createProject({projectName})
@@ -58,4 +58,4 @@ export default compose(
     firestoreConnect((props: any) => {
         return [{ collection: 'projects', where: ["userId", "==", props.auth.uid]}]},
     )
-)(CreatePage);
+)(CreateProjectPage);

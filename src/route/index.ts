@@ -1,4 +1,4 @@
-import CreatePage from '../pages/CreatePage';
+import CreateProjectPage from '../pages/CreateProjectPage';
 import HomePage from '../pages/HomePage';
 import ReportPage from '../pages/ReportPage';
 import LoginPage from '../pages/LoginPage';
@@ -21,7 +21,7 @@ const routes: IRoute[] = [
         isPrivate: true
     },
     {
-        component: CreatePage,
+        component: CreateProjectPage,
         path: "/create",
         name: "Create",
         isPrivate: true
