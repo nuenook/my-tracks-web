@@ -47,9 +47,6 @@ export const IndexPage: React.SFC<IndexPageProps> = ({
 
     useEffect(() => {
         if (timeData) {
-            // if (!selectDate) {
-            //     setSelectDate(new Date())
-            // }
 
             const useTimes = timeData.filter(t => t.projectId === selectProject && t.onDay === ToDayDate(selectDate))
             setTimeDataOfProject(useTimes)
