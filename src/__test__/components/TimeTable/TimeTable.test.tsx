@@ -15,7 +15,6 @@ describe("TimeTable component", () => {
     it("when not pass timeData, TimeRow should empty", () => {
         wrapper = shallow(<TimeTable {...props}/>)
 
-        console.log(wrapper.debug())
         expect(wrapper.find('TimeRow').length).toBe(0)
         expect(wrapper.find('table')).toHaveLength(1)
     })
