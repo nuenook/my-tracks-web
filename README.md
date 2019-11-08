@@ -1,4 +1,4 @@
-# Tracking Work Hours Projects
+# Tracking Work Hours Projects [![Build Status](https://travis-ci.org/nuenook/my-tracks-web.svg?branch=master)](https://travis-ci.org/nuenook/my-tracks-web)
 
 ### Hosting URL: 
    https://my-tracks-app.firebaseapp.com

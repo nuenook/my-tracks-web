@@ -15,7 +15,7 @@ import ToDayDate from '../utils/ToDayDate';
 import {createProjectTimestamp, setSelectDate} from '../redux/actions/timesatmpActions'
 import PieChartData from '../utils/PieChartData'
 
-export interface HomePageProps {
+export interface IndexPageProps {
     userProjects: IProject[];
     timeData: IProjectTime[];
     createProjectTimestamp: typeof createProjectTimestamp;
@@ -24,7 +24,7 @@ export interface HomePageProps {
 
 }
 
-export const HomePage: React.SFC<HomePageProps> = ({
+export const IndexPage: React.SFC<IndexPageProps> = ({
     userProjects,
     timeData,
     createProjectTimestamp,
@@ -146,4 +146,4 @@ export default compose(
             ]}
         ]
     })
-)(HomePage);
+)(IndexPage);

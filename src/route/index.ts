@@ -1,5 +1,5 @@
 import CreateProjectPage from '../pages/CreateProjectPage';
-import HomePage from '../pages/HomePage';
+import IndexPage from '../pages/IndexPage';
 import ReportPage from '../pages/ReportPage';
 import LoginPage from '../pages/LoginPage';
 import LogoutPage from '../pages/LogoutPage'
@@ -14,7 +14,7 @@ export interface IRoute {
 
 const routes: IRoute[] = [
     {
-        component: HomePage,
+        component: IndexPage,
         path: "/",
         name: "Home",
         exact: true,
