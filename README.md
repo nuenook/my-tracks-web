@@ -29,7 +29,7 @@
 ## NEED HELP
  - Design
  - ~~Backend API~~, I decided to use Firebase
- - DevOps and Unit-Testing
+ - ~~DevOps and Unit-Testing~~ used travis ci org
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
