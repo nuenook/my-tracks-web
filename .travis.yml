@@ -1,6 +1,3 @@
-cache:
-  directories:
-    - node_modules # cache node_module
 language: node_js # set language to node_js
 node_js:
   12 # use node version 12 current LTS
