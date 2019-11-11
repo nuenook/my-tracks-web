@@ -1,6 +1,6 @@
 export interface IActionType {
     type: string;
-    payload: any;
+    payload?: any;
 }
 
 const actionTypes = {
