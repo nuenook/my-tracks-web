@@ -1,6 +1,6 @@
 import actionTypes, {IActionType} from '../../types/actions.type'
 
-const initState = {
+export const initState = {
     selectProject: ""
 }
 

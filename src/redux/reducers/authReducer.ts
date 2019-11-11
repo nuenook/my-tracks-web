@@ -1,7 +1,7 @@
 
 import actionTypes, {IActionType} from '../../types/actions.type'
 
-const initStates = {
+export const initStates = {
     authError: ""
 }
 
